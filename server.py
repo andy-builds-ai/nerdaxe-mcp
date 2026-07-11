@@ -46,7 +46,11 @@ def _format_uptime(seconds) -> str:
 
 
 def _human_diff(value) -> str:
-    """Turn a large difficulty number into a short K/M/G/T/P string."""
+    """Turn a difficulty number into a short suffixed string.
+
+    Scales by thousands: no suffix below 1000, then K/M/G/T/P, and E beyond.
+    Returns 'n/a' for None.
+    """
     if value is None:
         return "n/a"
     value = float(value)
