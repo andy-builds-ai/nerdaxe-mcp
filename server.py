@@ -14,7 +14,8 @@ from dotenv import load_dotenv
 from mcp.server.fastmcp import FastMCP
 
 # Silence httpx's per-request INFO log: it prints the full miner URL (with the
-# IP) and would write onto the stdio stream that the MCP protocol owns.
+# IP). The record goes to stderr (which Claude Desktop captures), so this keeps
+# the IP out of the logs; the stdout stream the MCP protocol uses is unaffected.
 logging.getLogger("httpx").setLevel(logging.WARNING)
 
 # Load the miner IP from the .env next to THIS file, not the working directory.
@@ -118,7 +119,7 @@ def get_miner_status() -> str:
         f"Hashrate:    {data.get('hashRate', 0):.1f} GH/s "
         f"(1h avg {data.get('hashRate_1h', 0):.1f})\n"
         f"Temperature: {data.get('temp', 0):.1f} °C ASIC, "
-        f"{data.get('vrTemp', 0)} °C VR (limit {data.get('overheat_temp', 0)})\n"
+        f"{data.get('vrTemp', 0):.1f} °C VR (limit {data.get('overheat_temp', 0)})\n"
         f"Power:       {data.get('power', 0):.1f} W\n"
         f"Fan:         {data.get('fanspeed', 0)} % at {data.get('fanrpm', 0)} rpm\n"
         f"Uptime:      {_format_uptime(data.get('uptimeSeconds'))}\n"
@@ -172,7 +173,7 @@ def get_hardware_health() -> str:
         f"Hardware health\n"
         f"ASIC temp:    {data.get('temp', 0):.1f} °C "
         f"(overheat limit {data.get('overheat_temp', 0)})\n"
-        f"VR temp:      {data.get('vrTemp', 0)} °C\n"
+        f"VR temp:      {data.get('vrTemp', 0):.1f} °C\n"
         f"Fan:          {data.get('fanspeed', 0)} % at "
         f"{data.get('fanrpm', 0)} rpm ({auto})\n"
         f"Frequency:    {data.get('frequency', 0)} MHz\n"

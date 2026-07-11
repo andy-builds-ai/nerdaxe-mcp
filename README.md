@@ -8,13 +8,15 @@ transport for Claude Desktop.
 
 ## Status
 
-Scaffold stage. The tools are defined only after querying the live miner
-API once, so the fields are real and nothing is assumed from memory.
+Complete. All four tools query the live miner and were verified end to end —
+each tool by hand in the MCP Inspector, plus a live run from Claude Desktop.
+The tool set was cut from the real `/api/system/info` fields; nothing is
+assumed from memory.
 
 ## Setup
 
 ```bash
-python -m venv .venv
+py -m venv .venv              # `python` may hit the Windows Store stub; use py
 .venv\Scripts\activate        # Windows (PowerShell / cmd)
 pip install -r requirements.txt
 
@@ -32,8 +34,16 @@ absolute path to the venv Python.
 
 ## Tools
 
-To be defined after the live API exploration. Planned direction: a status
-overview (hashrate / temperature / uptime) and a shares / pool view.
+All four are read-only views on a single `/api/system/info` call.
+
+- `get_miner_status` — at-a-glance health: hashrate (with the 1h average),
+  ASIC/VR temperature, power, fan, uptime.
+- `get_pool_and_shares` — pool connection, accepted/rejected shares with the
+  reject rate, best share vs network difficulty, blocks found.
+- `get_hardware_health` — thermal and electrical detail plus the derived
+  energy efficiency (J/TH).
+- `get_device_info` — device and ASIC model, firmware version, uptime, last
+  reset reason.
 
 ## Scope and limits
 
