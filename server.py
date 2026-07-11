@@ -82,9 +82,10 @@ def fetch_system_info():
     """Fetch the miner's /api/system/info once.
 
     Returns the parsed JSON dict on success, or a human-readable error string
-    for the four failure cases: not configured / unreachable, timeout, HTTP
-    error status, broken JSON. This is the one place the request, timeout and
-    error handling live; the tools are views on its result.
+    when the miner is not configured, unreachable, times out, returns an HTTP
+    error status or a network error, or replies with invalid JSON. This is the
+    one place the request, timeout and error handling live; the tools are views
+    on its result.
     """
     if not MINER_IP:
         return "NERDAXE_IP is not set in .env — cannot reach the miner."
@@ -107,6 +108,12 @@ def fetch_system_info():
 
 
 # --- tools: read-only views on fetch_system_info() --------------------------
+#
+# These views format numeric fields (hashrate, temperatures, difficulties,
+# uptime) assuming the API returns them as numbers — verified against the live
+# miner. A non-numeric value would raise out of the tool instead of returning a
+# clean message; for this read-only monitor that is accepted rather than
+# guarding every field. fetch_system_info() handles the network/HTTP/JSON cases.
 
 @mcp.tool()
 def get_miner_status() -> str:
