@@ -8,10 +8,11 @@ transport for Claude Desktop.
 
 ## Status
 
-Complete. All four tools query the live miner and were verified end to end —
-each tool by hand in the MCP Inspector, plus a live run from Claude Desktop.
-The tool set was cut from the real `/api/system/info` fields; nothing is
-assumed from memory.
+Started as my first MCP server, a warm-up before a larger one — small and
+clean over complete. Now done: all four tools query the live miner and were
+verified end to end — each tool by hand in the MCP Inspector, plus a live
+run from Claude Desktop. The tool set was cut from the real
+`/api/system/info` fields; nothing is assumed from memory.
 
 ## Setup
 
@@ -49,4 +50,3 @@ All four are read-only views on a single `/api/system/info` call.
 
 - Read-only. No config writes, no restart, no history or database.
 - The miner IP lives only in `.env`, which is gitignored.
-- Local repository. No remote, no push.
