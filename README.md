@@ -46,6 +46,41 @@ All four are read-only views on a single `/api/system/info` call.
 - `get_device_info` — device and ASIC model, firmware version, uptime, last
   reset reason.
 
+## Live proof
+
+Example output from the four tools against a running miner:
+
+```
+NerdAxe Gamma — status
+Hashrate:    1093.2 GH/s (1h avg 1069.5)
+Temperature: 63.9 °C ASIC, 59.8 °C VR (limit 70)
+Power:       17.6 W
+Fan:         46 % at 3536 rpm
+Uptime:      58d 22h 45m
+
+Pool & shares
+Shares:       160084 accepted / 438 rejected (0.27 % reject)
+Best share:   5.73G all-time, 731.83M this session
+Network diff: 127.17T
+Blocks found: 0
+
+Hardware health
+ASIC temp:    63.9 °C (overheat limit 70)
+VR temp:      59.8 °C
+Fan:          46 % at 3536 rpm (auto)
+Frequency:    550 MHz
+Core voltage: 1025 mV set / 1007 mV actual
+Power:        17.6 W at 4.97 V, 3.54 A
+Efficiency:   16.1 J/TH
+
+Device info
+Model:      NerdAxeGamma (ASIC BM1370 x1)
+Firmware:   v1.0.37.1
+Uptime:     58d 22h 45m
+Last reset: SYSTEM.RESET_SOFTWARE
+Free heap:  7023824 bytes
+```
+
 ## Scope and limits
 
 - Read-only. No config writes, no restart, no history or database.
